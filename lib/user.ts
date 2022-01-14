@@ -19,9 +19,9 @@ export const getUserProps = withIronSessionSsr(async function ({
   res,
   query,
 }) {
-  const sessionToken = query.token as string
+  const sessionToken = query.token as string | undefined
   const user = req.session.user
-  if (sessionToken.length > 0 && user) {
+  if (sessionToken && sessionToken.length > 0 && user) {
     req.session.user = {
       ...user,
       sessionToken,

@@ -6,6 +6,7 @@ import { Data } from "./api/forms"
 import Link from "next/link"
 import { fetcher } from "../utils"
 import { getUserProps } from "../lib/user"
+import NavBar from "../components/navBar"
 
 export const getServerSideProps = getUserProps
 
@@ -37,6 +38,9 @@ const Home = ({
   return (
     <div className="min-h-screen flex flex-col justify-between">
       <main>
+        <header>
+          <NavBar user={user} />
+        </header>
         <div>
           <div className="bg-white">
             <div className="max-w-7xl mx-auto py-5 px-4 sm:px-6 lg:px-8">
