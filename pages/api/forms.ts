@@ -10,6 +10,7 @@ export type Data = {
 export type Form = {
   name: string
   required: boolean
+  header?: string
   elements: Entry<Element>[]
 }
 
@@ -17,6 +18,7 @@ type Element = {
   label: string
   type: ElementType
   required: boolean
+  options?: string[]
 }
 
 export enum ElementType {
