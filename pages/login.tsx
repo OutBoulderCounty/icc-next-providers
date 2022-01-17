@@ -108,7 +108,7 @@ const Login = () => {
                     as="h3"
                     className="text-lg leading-6 font-medium text-gray-900"
                   >
-                    "No Passwords Required!"
+                    No Passwords Required!
                   </Dialog.Title>
                   <div className="mt-2">
                     <p className="text-sm text-gray-500">
