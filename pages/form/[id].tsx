@@ -100,31 +100,51 @@ const Form = ({
 
   const handleCancelClick = () => router.push("/")
 
-  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault()
-  //   const formData = e.currentTarget
-  //   for (let i = 0; i < formData.length; i++) {
-  //     const input = formData[i] as HTMLInputElement
-  //     if (input.value) {
-  //       const response = {}
-  //       if (["radio", "checkbox"].includes(input.type)) {
-  //         if (input.checked) {
-  //           console.log({
-  //             name: input.name,
-  //             type: input.type,
-  //             value: input.value,
-  //           })
-  //         }
-  //       } else {
-  //         console.log({
-  //           name: input.name,
-  //           type: input.type,
-  //           value: input.value,
-  //         })
-  //       }
-  //     }
-  //   }
-  // }
+  function encode(data: any) {
+    return Object.keys(data)
+      .map(
+        (key) => encodeURIComponent(key) + "=" + encodeURIComponent(data[key])
+      )
+      .join("&")
+  }
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const formData = {
+      "form-name": data?.form.fields.name,
+      ...e.currentTarget,
+    }
+    const formBody = encode(formData)
+    fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: formBody,
+    })
+      .catch((error) => alert(error))
+      .then(() => alert("form submitted!"))
+    //   const formData = e.currentTarget
+    //   for (let i = 0; i < formData.length; i++) {
+    //     const input = formData[i] as HTMLInputElement
+    //     if (input.value) {
+    //       const response = {}
+    //       if (["radio", "checkbox"].includes(input.type)) {
+    //         if (input.checked) {
+    //           console.log({
+    //             name: input.name,
+    //             type: input.type,
+    //             value: input.value,
+    //           })
+    //         }
+    //       } else {
+    //         console.log({
+    //           name: input.name,
+    //           type: input.type,
+    //           value: input.value,
+    //         })
+    //       }
+    //     }
+    //   }
+  }
 
   return (
     <>
@@ -142,6 +162,7 @@ const Form = ({
           <form
             className="space-y-8 divide-y divide-gray-200"
             data-netlify={true}
+            onSubmit={handleSubmit}
           >
             {data?.form.fields.elements.map((element) => {
               return (
