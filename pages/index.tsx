@@ -1,9 +1,7 @@
 import type { InferGetServerSidePropsType, NextPage } from "next"
-import Image from "next/image"
 import useSWR from "swr"
 import React from "react"
-import { Data } from "./api/forms"
-import Link from "next/link"
+import { Data } from "./api/forms/tally"
 import { fetcher } from "../utils"
 import { getUserProps } from "../lib/user"
 import NavBar from "../components/navBar"
@@ -31,7 +29,7 @@ const Active = ({ isActive, className, children }: ActiveProps) => {
 const Home = ({
   user,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const { data, error } = useSWR<Data, Error>("/api/forms", fetcher)
+  const { data, error } = useSWR<Data, Error>("/api/forms/tally", fetcher)
 
   if (error) return <div>failed to load: {error.message}</div>
 
@@ -97,30 +95,30 @@ const Home = ({
                     <tbody className="overflow-y-scroll">
                       {data?.forms
                         ?.sort((a, b) => {
-                          if (a.fields.required < b.fields.required) return 1
-                          if (a.fields.required > b.fields.required) return -1
+                          if (a.required < b.required) return 1
+                          if (a.required > b.required) return -1
                           return 0
                         })
                         .map((form, formIdx) => (
                           <tr
-                            key={form.sys.id}
+                            key={form.id}
                             className={
                               formIdx % 2 === 0 ? "bg-white" : "bg-gray-50"
                             }
                           >
                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                              {form.fields.name}
+                              {form.name}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                              <Active isActive={form.fields.required}>
-                                {form.fields.required ? "Yes" : "No"}
+                              <Active isActive={form.required}>
+                                {form.required ? "Yes" : "No"}
                               </Active>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                               <div className="text-violet hover:text-violet-darkest">
-                                <Link href={`/form/${form.sys.id}`}>
+                                <a href={form.url} target="_blank">
                                   Create
-                                </Link>
+                                </a>
                               </div>
                             </td>
                           </tr>
