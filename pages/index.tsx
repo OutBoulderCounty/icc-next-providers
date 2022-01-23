@@ -116,7 +116,10 @@ const Home = ({
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                               <div className="text-violet hover:text-violet-darkest">
-                                <a href={form.url} target="_blank">
+                                <a
+                                  href={`${form.url}?user_id=${user.id}&form_id=${form.id}`}
+                                  target="_blank"
+                                >
                                   Create
                                 </a>
                               </div>
