@@ -119,6 +119,7 @@ const Home = ({
                                 <a
                                   href={`${form.url}?user_id=${user.id}&form_id=${form.id}`}
                                   target="_blank"
+                                  rel="noreferrer"
                                 >
                                   Create
                                 </a>
